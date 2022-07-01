@@ -52,7 +52,7 @@ class _ModelCardState extends State<ModelCard> {
         .seconds(sec: 5)
         .fastOutSlowIn
         .width(_width)
-        .height(100)
+        .height(Get.height * .1)
         .color(_color)
         .withRounded(value: _radius)
         .p12
