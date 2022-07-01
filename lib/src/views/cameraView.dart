@@ -21,7 +21,7 @@ class _CameraViewState extends State<CameraView> {
 
   final FaceMeshController _faceMeshController = Get.find();
   final InferenceController _inferenceController = Get.find();
-  late final double _ratio;
+  late double _ratio;
   int _cameraIndex = 1;
   @override
   void initState() {
@@ -33,10 +33,10 @@ class _CameraViewState extends State<CameraView> {
     _inferenceController.isolateUtil = IsolateUtil();
     await _inferenceController.isolateUtil?.initIsolate();
     await _faceMeshController.loadModel();
-    initCamera(_cameraIndex);
+    await initCamera(_cameraIndex);
   }
 
-  void initCamera(int index) async {
+  Future<void> initCamera(int index) async {
     _cameraController = CameraController(cameras[index], ResolutionPreset.high);
     await _cameraController!.initialize().then((value) async {
       if (!mounted) {
@@ -62,7 +62,7 @@ class _CameraViewState extends State<CameraView> {
     }
   }
 
-  toggleCamera() {
+  toggleCamera() async {
     setState(() {
       if (_cameraIndex == 0) {
         _cameraIndex = 1;
@@ -72,7 +72,7 @@ class _CameraViewState extends State<CameraView> {
     });
     if (_cameraController != null) {
       _cameraController!.stopImageStream();
-      initCamera(_cameraIndex);
+      await initCamera(_cameraIndex);
     }
   }
 
@@ -141,8 +141,6 @@ class _CameraViewState extends State<CameraView> {
   @override
   void dispose() {
     super.dispose();
-    _cameraController = null;
-    _inferenceController.dispose();
-    _faceMeshController.dispose();
+    _cameraController?.dispose();
   }
 }

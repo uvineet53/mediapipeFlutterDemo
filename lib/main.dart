@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:mediapipedemo/src/bindings/homeBinding.dart';
+import 'package:mediapipedemo/src/bindings/ModelBinding.dart';
 import 'package:mediapipedemo/src/views/cameraView.dart';
 import 'package:mediapipedemo/src/views/homeView.dart';
 
@@ -21,8 +21,15 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       initialRoute: "/",
       getPages: [
-        GetPage(name: "/", page: () => HomeView(), binding: HomeBinding()),
-        GetPage(name: "/facemesh", page: () => CameraView())
+        GetPage(
+          name: "/",
+          page: () => HomeView(),
+        ),
+        GetPage(
+          name: "/facemesh",
+          page: () => CameraView(),
+          binding: ModelBinding(),
+        )
       ],
     );
   }
